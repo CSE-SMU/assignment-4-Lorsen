@@ -8,12 +8,13 @@
 </head>
 
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
-<body ng-controller="mainController">
+<body ng-controller="TodoListController as todoList">
     <div class="container">
 
         <!-- HEADER AND TODO COUNT -->
         <div class="jumbotron text-center">
             <h1>Git 'er done.</h1>
+              <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
         </div>
         
     </div>
@@ -21,7 +22,7 @@
     <div class = "container">
         
         <!-- TODO LIST -->
-        <div id="todo-list" class="row">
+        <div id="todoList" class="row">
             <div class="col-sm-4 col-sm-offset-4">
 
                 <!-- LOOP OVER THE TODOS IN $scope.todos -->
@@ -45,7 +46,7 @@
                     </div>
 
                     <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Git 'er.</button>
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="addToDo()">Git 'er.</button>
                 </form>
             </div>
         </div>
