@@ -1,23 +1,26 @@
-function TodoCtrl($scope) {
-  
-  $scope.todos = [
-    {text:'Learn AngularJS', done:false},         
-    {text: 'Build an app', done:false}
-  ];
-  
-  $scope.getTotalTodos = function () {
-    return $scope.todos.length;
-  };
-  
-  
-  $scope.addTodo = function () {
-    $scope.todos.push({text:$scope.formTodoText, done:false});
-    $scope.formTodoText = '';
-  };
-  
-    $scope.clearCompleted = function () {
-        $scope.todos = _.filter($scope.todos, function(todo){
-            return !todo.done;
-        });
+angular.module('todoApp', [])
+  .controller('TodoListController', function() {
+    var todoList = this;
+    todoList.todos = [];
+ 
+    todoList.addTodo = function() {
+      todoList.todos.push({text:todoList.todoText, done:false});
+      todoList.todoText = '';
     };
-}
+ 
+    todoList.remaining = function() {
+      var count = 0;
+      angular.forEach(todoList.todos, function(todo) {
+        count += todo.done ? 0 : 1;
+      });
+      return count;
+    };
+ 
+    todoList.archive = function() {
+      var oldTodos = todoList.todos;
+      todoList.todos = [];
+      angular.forEach(oldTodos, function(todo) {
+        if (!todo.done) todoList.todos.push(todo);
+      });
+    };
+  });

@@ -8,29 +8,33 @@
 </head>
 
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
+
 <body ng-controller="TodoListController as todoList">
     <div class="container">
 
         <!-- HEADER AND TODO COUNT -->
-        <div class="jumbotron text-center">
+        <div class="jumbotron">
             <h1>Git 'er done.</h1>
-              <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
+            <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
+            [ <a href="" ng-click="todoList.archive()">Done</a> ]
         </div>
-        
     </div>
 
-    <div class = "container">
-        
-        <!-- TODO LIST -->
-        <div id="todoList" class="row">
-            <div class="col-sm-4 col-sm-offset-4">
+    <div class="container">
 
+        <!-- TODO LIST -->
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                
                 <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                <div class="checkbox" ng-repeat="todo in todos">
-                    <label>
-                        <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-                    </label>
-                </div>
+                <ul>
+                    <li ng-repeat="todo in todoList.todos">
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model="todo.done">
+                            <span class="done-{{todo.done}}">{{ todo.text }}</span>
+                        </label>
+                    </li>
+                </ul>
 
             </div>
         </div>
@@ -38,15 +42,15 @@
         <!-- FORM TO CREATE TODOS -->
         <div id="todo-form" class="row">
             <div class="col-sm-8 col-sm-offset-2 text-center">
-                <form>
+                <form ng-submit="todoList.addTodo()">
                     <div class="form-group">
 
                         <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="form-control input-lg text-center" placeholder="Git it done." ng-model="formData.text">
+                        <input type="text" ng-model="todoList.todoText" class="form-control input-lg text-center" placeholder="Git it done.">
                     </div>
 
                     <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="addToDo()">Git 'er.</button>
+                    <input class="btn btn-primary btn-lg" type="submit" value="Git 'er">
                 </form>
             </div>
         </div>
